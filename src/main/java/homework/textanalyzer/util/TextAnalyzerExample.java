@@ -1,4 +1,4 @@
-package homework.textanalyzer;
+package homework.textanalyzer.util;
 
 import java.util.HashMap;
 
