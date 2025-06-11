@@ -1,6 +1,7 @@
 package homework.textanalyzer.service;
+
 import homework.textanalyzer.util.AnalysisType;
-import homework.textanalyzer.util.CharacterSets;
+import homework.textanalyzer.util.CharacterSets; // Assumed to contain definitions for VOWELS, CONSONANTS etc.
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -9,9 +10,10 @@ import java.util.Map;
 
 /**
  * Service for analyzing text to count vowels or consonants.
+ * This service performs the core business logic of character counting.
  * The analysis is case-insensitive for character counting.
  */
-@Service // Mark this class as a Spring Service
+@Service
 public class TextAnalyzerService {
 
     /**
@@ -20,19 +22,24 @@ public class TextAnalyzerService {
      * @param text The input sentence to be analyzed.
      * @param type The type of analysis to perform: "vowels" or "consonants".
      * @return A map where keys are uppercase characters and values are their counts.
-     * Returns an empty map if the input text is null or empty, or if the type is invalid.
+     * Returns an empty map if the input text is null, empty, or if the type is invalid.
      */
-    public Map<Character, Integer> analyze(String text, AnalysisType type) { // Changed type to AnalysisType
+    public Map<Character, Integer> analyze(String text, AnalysisType type) {
+        // Handle invalid or empty input to prevent errors and return a predictable empty result.
         if (text == null || text.trim().isEmpty() || type == null) {
             return Collections.emptyMap();
         }
 
+        // Use LinkedHashMap to maintain the insertion order of characters, if important for consistency.
         Map<Character, Integer> counts = new LinkedHashMap<>();
         String normalizedText = text.toUpperCase();
 
+        // Iterate over each character in the normalized text.
         for (char ch : normalizedText.toCharArray()) {
+            // Only process if the character is an actual letter.
             if (Character.isLetter(ch)) {
-                switch (type) { // Use switch statement for better readability with enums
+                // Determine analysis based on the specified type.
+                switch (type) {
                     case VOWELS:
                         if (isVowel(ch)) {
                             counts.put(ch, counts.getOrDefault(ch, 0) + 1);
@@ -43,13 +50,12 @@ public class TextAnalyzerService {
                             counts.put(ch, counts.getOrDefault(ch, 0) + 1);
                         }
                         break;
-                    // No 'default' needed if all enum cases are handled,
-                    // or if you want to explicitly throw an exception for unhandled types.
                 }
             }
         }
-        return counts;
+        return counts; // Return the map of character counts.
     }
+
 
     private boolean isVowel(char ch) {
         return CharacterSets.VOWELS.getCharacters().indexOf(ch) != -1;
