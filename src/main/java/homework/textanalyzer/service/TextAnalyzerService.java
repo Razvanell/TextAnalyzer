@@ -31,7 +31,7 @@ public class TextAnalyzerService {
         }
 
         // Use LinkedHashMap to maintain the insertion order of characters, if important for consistency.
-        Map<Character, Integer> counts = new LinkedHashMap<>();
+        Map<Character, Integer> charCounterMap = new LinkedHashMap<>();
         String normalizedText = text.toUpperCase();
 
         // Iterate over each character in the normalized text.
@@ -42,18 +42,18 @@ public class TextAnalyzerService {
                 switch (type) {
                     case VOWELS:
                         if (isVowel(ch)) {
-                            counts.put(ch, counts.getOrDefault(ch, 0) + 1);
+                            charCounterMap.put(ch, charCounterMap.getOrDefault(ch, 0) + 1);
                         }
                         break;
                     case CONSONANTS:
                         if (!isVowel(ch)) {
-                            counts.put(ch, counts.getOrDefault(ch, 0) + 1);
+                            charCounterMap.put(ch, charCounterMap.getOrDefault(ch, 0) + 1);
                         }
                         break;
                 }
             }
         }
-        return counts; // Return the map of character counts.
+        return charCounterMap; // Return the map of character charCounterMap.
     }
 
 

@@ -9,12 +9,19 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(21) // Ensures Java 21 is used
     }
 }
 
 configurations {
     compileOnly {
+        extendsFrom annotationProcessor
+    }
+    // Define a separate configuration for test-specific annotation processing
+    testCompileOnly { // For Lombok annotations during test compilation
+        extendsFrom annotationProcessor
+    }
+    testAnnotationProcessor { // For Lombok annotation processing specifically for tests
         extendsFrom annotationProcessor
     }
 }
@@ -24,13 +31,23 @@ repositories {
 }
 
 dependencies {
+    // Spring Boot Starter for Web applications (includes Tomcat, Spring MVC)
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Lombok for boilerplate code generation (e.g., getters, setters, constructors)
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // Spring Boot Test Starter: Provides core testing utilities, including JUnit 5, AssertJ, Mockito
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Ensure Lombok annotations are processed for test classes as well
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
 }
 
+// Configures the 'test' task to use JUnit 5 platform for running tests
 tasks.named('test') {
     useJUnitPlatform()
 }
