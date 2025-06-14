@@ -1,7 +1,7 @@
 package homework.textanalyzer.service;
 
 import homework.textanalyzer.util.AnalysisType;
-import homework.textanalyzer.util.CharacterSets; // Assumed to contain definitions for VOWELS, CONSONANTS etc.
+import homework.textanalyzer.util.CharacterSets;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -9,8 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Service for analyzing text to count vowels or consonants.
- * This service performs the core business logic of character counting.
+ * The program for calculating how many times letter in given sentence appears.
  * The analysis is case-insensitive for character counting.
  */
 @Service
@@ -25,7 +24,6 @@ public class TextAnalyzerService {
      * Returns an empty map if the input text is null, empty, or if the type is invalid.
      */
     public Map<Character, Integer> analyze(String text, AnalysisType type) {
-        // Handle invalid or empty input to prevent errors and return a predictable empty result.
         if (text == null || text.trim().isEmpty() || type == null) {
             return Collections.emptyMap();
         }
@@ -46,18 +44,22 @@ public class TextAnalyzerService {
                         }
                         break;
                     case CONSONANTS:
-                        if (!isVowel(ch)) {
+                        if (isConsonant(ch)) {
                             charCounterMap.put(ch, charCounterMap.getOrDefault(ch, 0) + 1);
                         }
                         break;
                 }
             }
         }
-        return charCounterMap; // Return the map of character charCounterMap.
+        return charCounterMap;
     }
 
 
     private boolean isVowel(char ch) {
         return CharacterSets.VOWELS.getCharacters().indexOf(ch) != -1;
+    }
+
+    private boolean isConsonant(char ch) {
+        return CharacterSets.CONSONANTS.getCharacters().indexOf(ch) != -1;
     }
 }

@@ -29,11 +29,9 @@ class TextAnalyzerServiceTest {
         Map<Character, Integer> result = textAnalyzerService.analyze(text, type);
 
         assertNotNull(result);
-        // Corrected: There are only 2 unique vowels (E, O) in "Hello World"
         assertEquals(2, result.size(), "Should contain 2 unique vowels: E, O");
         assertEquals(1, result.get('E'), "Count for E should be 1");
         assertEquals(2, result.get('O'), "Count for O should be 2");
-        assertNull(result.get('A'), "Count for A should be null as it's not present");
     }
 
     @Test
@@ -44,14 +42,12 @@ class TextAnalyzerServiceTest {
         Map<Character, Integer> result = textAnalyzerService.analyze(text, type);
 
         assertNotNull(result);
-        // Corrected: There are 5 unique consonants (H, L, W, R, D) in "Hello World"
         assertEquals(5, result.size(), "Should contain 5 unique consonants: H, L, W, R, D");
         assertEquals(1, result.get('H'), "Count for H should be 1");
         assertEquals(3, result.get('L'), "Count for L should be 3");
         assertEquals(1, result.get('W'), "Count for W should be 1");
         assertEquals(1, result.get('R'), "Count for R should be 1");
         assertEquals(1, result.get('D'), "Count for D should be 1");
-        assertNull(result.get('A'), "Count for A should be null as it's a vowel");
     }
 
     @Test
@@ -94,7 +90,7 @@ class TextAnalyzerServiceTest {
         AnalysisType type = AnalysisType.VOWELS;
         Map<Character, Integer> result = textAnalyzerService.analyze(text, type);
 
-        assertEquals(2, result.size()); // A, E
+        assertEquals(2, result.size());
         assertEquals(1, result.get('A'));
         assertEquals(1, result.get('E'));
     }

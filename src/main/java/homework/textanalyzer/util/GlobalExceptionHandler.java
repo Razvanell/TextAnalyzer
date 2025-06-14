@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 /**
- * Global exception handler for the textanalyzer application.
- * This class uses @ControllerAdvice to provide centralized exception handling
- * across all @Controller classes, ensuring consistent error responses.
+ * Global exception handler for the TextAnalyzer application.
+ * Annotation @ControllerAdvice provides centralized exception handling across all @Controller classes, ensuring consistent error responses.
  */
-@ControllerAdvice // This annotation makes this class a global handler for exceptions
+@ControllerAdvice // Makes this class a global handler for exceptions
 public class GlobalExceptionHandler {
 
     /**
@@ -55,15 +54,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        // You can extract more specific validation error details from ex.getBindingResult().getAllErrors()
         String error = "Validation error: " + ex.getMessage();
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     /**
      * Catches and handles the custom TextLengthExceededException.
-     * The HTTP status (413 Payload Too Large) is already defined by the @ResponseStatus
-     * annotation on the TextLengthExceededException class itself.
+     * The HTTP status (413 Payload Too Large) is already defined by the @ResponseStatus annotation on the TextLengthExceededException class itself.
      * @param ex The TextLengthExceededException.
      * @return ResponseEntity containing the exception's message in the response body.
      */
@@ -73,10 +70,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.PAYLOAD_TOO_LARGE);
     }
 
-    // You can add more general exception handlers here for other unexpected errors
-    // @ExceptionHandler(Exception.class)
-    // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    // public ResponseEntity<String> handleAllUncaughtExceptions(Exception ex) {
-    //     return new ResponseEntity<>("An unexpected error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
 }

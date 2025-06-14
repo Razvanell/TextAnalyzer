@@ -19,9 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Integration tests for TextAnalyzerController.
@@ -132,9 +130,7 @@ class TextAnalyzerControllerIntegrationTest {
     @Test
     @DisplayName("Should return 413 Payload Too Large for excessive text length")
     void analyzeText_excessiveTextLength() throws Exception {
-        // The maxTextLength is set to 100 characters for this test class via @TestPropertySource.
-        // Creating a string longer than 100 characters to trigger the validation.
-        String longText = "a".repeat(200); // 200 characters > 100 max length
+        String longText = "a".repeat(200); // 200 characters > max length
 
         // This test verifies the controller's validation, which throws an exception
         // before the service is even called. Thus, no mock service behavior is needed here.

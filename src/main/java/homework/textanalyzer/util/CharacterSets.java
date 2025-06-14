@@ -1,8 +1,11 @@
-package homework.textanalyzer.util; // Or 'model' or 'enums' if you prefer
+package homework.textanalyzer.util;
 
+import lombok.Getter;
+
+@Getter
 public enum CharacterSets {
-    VOWELS("AEIOU");
-    // CONSONANTS("BCDFGHJKLMNPQRSTVWXYZ"),
+    VOWELS("AEIOU"),
+    CONSONANTS("BCDFGHJKLMNPQRSTVWXYZ");
     // DIGITS("0123456789");
 
     private final String characters;
@@ -11,7 +14,4 @@ public enum CharacterSets {
         this.characters = characters;
     }
 
-    public String getCharacters() {
-        return characters;
-    }
 }
