@@ -33,7 +33,6 @@ public class TextAnalyzerController {
      * @param text The text to analyze.
      * @return A ResponseEntity containing the custom AnalysisResponse object.
      * @throws TextLengthExceededException if the input text length exceeds the configured maximum.
-     * (This exception is then caught by the GlobalExceptionHandler).
      */
     @GetMapping
     public ResponseEntity<AnalysisResponse> analyzeText(
