@@ -24,7 +24,7 @@ public class TextAnalyzerService {
      * Returns an empty map if the input text is null, empty, or if the type is invalid.
      */
     public Map<Character, Integer> analyze(String text, AnalysisType type) {
-        if (text == null || text.trim().isEmpty() || type == null) {
+        if (text == null || text.isBlank() || type == null) {
             return Collections.emptyMap();
         }
 
@@ -39,12 +39,12 @@ public class TextAnalyzerService {
                 // Determine analysis based on the specified type.
                 switch (type) {
                     case VOWELS:
-                        if (isVowel(ch)) {
+                        if (CharacterSets.VOWELS.contains(ch)) {
                             charCounterMap.put(ch, charCounterMap.getOrDefault(ch, 0) + 1);
                         }
                         break;
                     case CONSONANTS:
-                        if (isConsonant(ch)) {
+                        if (CharacterSets.CONSONANTS.contains(ch)) {
                             charCounterMap.put(ch, charCounterMap.getOrDefault(ch, 0) + 1);
                         }
                         break;
@@ -54,12 +54,4 @@ public class TextAnalyzerService {
         return charCounterMap;
     }
 
-
-    private boolean isVowel(char ch) {
-        return CharacterSets.VOWELS.getCharacters().indexOf(ch) != -1;
-    }
-
-    private boolean isConsonant(char ch) {
-        return CharacterSets.CONSONANTS.getCharacters().indexOf(ch) != -1;
-    }
 }
