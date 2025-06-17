@@ -45,7 +45,7 @@ public class TextAnalyzerController {
         }
 
         // Handle empty text inputs specifically; return an empty result map.
-        if (text.trim().isEmpty()) {
+        if (text.isBlank()) {
             return ResponseEntity.ok(new AnalysisResponse(Collections.emptyMap(), text, type));
         }
 
